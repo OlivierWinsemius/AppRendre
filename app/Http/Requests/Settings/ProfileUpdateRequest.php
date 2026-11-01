@@ -11,6 +11,18 @@ class ProfileUpdateRequest extends FormRequest
     use ProfileValidationRules;
 
     /**
+     * Normalize the email before validating and storing it.
+     */
+    protected function prepareForValidation(): void
+    {
+        $email = $this->input('email');
+
+        if (config('fortify.lowercase_usernames') && is_string($email)) {
+            $this->merge(['email' => \Illuminate\Support\Str::lower($email)]);
+        }
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, ValidationRule|array<mixed>|string>
