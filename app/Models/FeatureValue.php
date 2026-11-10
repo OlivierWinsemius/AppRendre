@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\FeatureValueCode\FeatureValueCode;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -22,5 +23,13 @@ class FeatureValue extends Model
     public function feature(): BelongsTo
     {
         return $this->belongsTo(Feature::class);
+    }
+
+    public static function for(FeatureValueCode $code): self
+    {
+        return static::query()
+            ->whereRelation('feature', 'code', $code->feature())
+            ->where('code', $code->value)
+            ->firstOrFail();
     }
 }
