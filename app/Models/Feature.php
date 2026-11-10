@@ -27,4 +27,9 @@ class Feature extends Model
     {
         return $this->hasMany(FeatureValue::class);
     }
+
+    public static function for(FeatureCode $code): self
+    {
+        return static::query()->where('code', $code)->firstOrFail();
+    }
 }

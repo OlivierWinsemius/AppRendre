@@ -20,4 +20,9 @@ class PartOfSpeech extends Model
     ];
 
     public $timestamps = false;
+
+    public static function for(PartOfSpeechCode $code): self
+    {
+        return static::query()->where('code', $code)->firstOrFail();
+    }
 }
