@@ -6,11 +6,12 @@ import InputError from '@/components/input-error';
 import PasswordInput from '@/components/password-input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { edit } from '@/routes/security';
+import { edit as editSecurity } from '@/routes/security';
 import type { Props as ManagePasskeysProps } from '@/components/manage-passkeys';
 import ManagePasskeys from '@/components/manage-passkeys';
 import type { Props as ManageTwoFactorProps } from '@/components/manage-two-factor';
 import ManageTwoFactor from '@/components/manage-two-factor';
+import { edit } from '@/routes/profile';
 
 // oxfmt-ignore
 type Props = {
@@ -141,8 +142,12 @@ export default function Security(props: Props) {
 Security.layout = {
     breadcrumbs: [
         {
-            title: 'Security settings',
+            title: 'Settings',
             href: edit(),
+        },
+        {
+            title: 'Security settings',
+            href: editSecurity(),
         },
     ],
 };
