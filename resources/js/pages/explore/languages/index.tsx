@@ -1,6 +1,10 @@
 import type { SharedPageProps } from '@inertiajs/core';
-import { Head } from '@inertiajs/react';
-import { index, languages as languagesRoute } from '@/routes/explore';
+import { Head, Link } from '@inertiajs/react';
+import {
+    index,
+    languages as languagesRoute,
+    showLanguage,
+} from '@/routes/explore';
 
 type Props = SharedPageProps & {
     languages: string[];
@@ -15,7 +19,11 @@ export default function Languages({ languages }: Props) {
 
                 <ul>
                     {languages.map((lang) => (
-                        <li key={lang}>{lang}</li>
+                        <li key={lang}>
+                            <Link href={showLanguage(lang)} prefetch>
+                                {lang}
+                            </Link>
+                        </li>
                     ))}
                 </ul>
             </div>
