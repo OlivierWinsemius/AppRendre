@@ -42,4 +42,38 @@ class LanguagesTest extends TestCase
             ->where('languages', [])
         );
     }
+
+    public function test_verified_users_see_the_language_matching_the_code(): void
+    {
+        $user = User::factory()->create();
+        Language::create(['code' => LanguageCode::English]);
+        $french = Language::create(['code' => LanguageCode::French]);
+
+        $response = $this->actingAs($user)->get(route('explore.showLanguage', 'fr'));
+
+        $response->assertOk();
+        $response->assertInertia(fn (AssertableInertia $page) => $page
+            ->component('explore/languages/language')
+            ->where('language.id', $french->id)
+            ->where('language.code', 'fr')
+        );
+    }
+
+    public function test_unknown_language_code_returns_404(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get('/explore/languages/xx');
+
+        $response->assertNotFound();
+    }
+
+    public function test_known_language_code_without_a_language_record_returns_404(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get(route('explore.showLanguage', 'en'));
+
+        $response->assertNotFound();
+    }
 }
