@@ -1,23 +1,15 @@
-import type { SharedPageProps } from '@inertiajs/core';
 import { Head } from '@inertiajs/react';
-import { index } from '@/routes/explore';
+import { index, languages } from '@/routes/explore';
+import { Link } from '@inertiajs/react';
 
-type Props = SharedPageProps & {
-    languages: string[];
-};
-
-export default function Explore({ languages }: Props) {
+export default function Explore() {
     return (
         <>
             <Head title="explore" />
             <div className="flex flex-col gap-6 p-4">
-                <h1>Languages:</h1>
-
-                <ul>
-                    {languages.map((lang) => (
-                        <li key={lang}>{lang}</li>
-                    ))}
-                </ul>
+                <Link href={languages()} prefetch>
+                    Languages
+                </Link>
             </div>
         </>
     );
